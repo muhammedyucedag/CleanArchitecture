@@ -8,7 +8,11 @@ string connectionString = builder.Configuration.GetConnectionString("SqlServer")
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 //Mevcut uygulumada baþka katmandan controllerin devam edeceðini iletiyoruz. 
-builder.Services.AddControllers().AddApplicationPart(typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly);
+
+var assembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
+    
+builder.Services.AddControllers().AddApplicationPart(assembly);
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(assembly));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
