@@ -7,16 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
 
+
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-//Mevcut uygulumada baþka katmandan controllerin devam edeceðini iletiyoruz. 
+var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference).Assembly;
+var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;
+var applicationAssembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
 
-var assembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
-    
-builder.Services.AddControllers().AddApplicationPart(assembly);
-builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(assembly));
+builder.Services.AddAutoMapper(persistanceAssembly);
+
+builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
+
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(applicationAssembly));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
