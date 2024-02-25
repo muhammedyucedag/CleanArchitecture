@@ -1,5 +1,6 @@
 using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
+using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Repository;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repository;
@@ -7,6 +8,7 @@ using CleanArchitecture.Persistance.Service;
 using CleanArchitecture.WepApi.Middleware;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -26,6 +28,7 @@ builder.Services.AddTransient<ExcepitonMiddleware>();
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>().AddEntityFrameworkStores<AppDbContext>();
 
 var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference).Assembly;
 var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;
