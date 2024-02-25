@@ -1,7 +1,11 @@
+using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Service;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +20,17 @@ var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference
 var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;
 var applicationAssembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
 
+var transient = (typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 builder.Services.AddAutoMapper(persistanceAssembly);
 
 builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(applicationAssembly));
+
+builder.Services.AddTransient(transient.Item1, transient.Item2);
+
+builder.Services.AddValidatorsFromAssembly(applicationAssembly); 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
