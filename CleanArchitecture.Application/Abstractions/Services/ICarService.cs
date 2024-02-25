@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
+﻿using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 using CleanArchitecture.Domain.Entites;
 
-namespace CleanArchitecture.Application.Services;
+namespace CleanArchitecture.Application.Abstractions.Services;
 
 public interface ICarService
 {

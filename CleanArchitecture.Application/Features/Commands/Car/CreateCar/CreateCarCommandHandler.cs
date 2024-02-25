@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Services;
+﻿using CleanArchitecture.Application.Abstractions.Services;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
+namespace CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 
 public sealed class CreateCarCommandHandler : IRequestHandler<CreateCarCommandRequest, CreateCarCommandResponse>
 {

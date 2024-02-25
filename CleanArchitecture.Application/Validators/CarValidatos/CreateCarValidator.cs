@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
+﻿using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Validators.CarValidatos

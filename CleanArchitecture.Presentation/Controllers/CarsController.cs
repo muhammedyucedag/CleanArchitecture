@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
-using CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar;
+﻿using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
+using CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
 using CleanArchitecture.Presentation.Abstraction;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Services;
+using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Domain.Dtos.Car;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar;
+namespace CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
 
 public sealed record GetAllCarQueryHandler : IRequestHandler<GetAllCarQueryRequest, GetAllCarQueryResponse>
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar;
+namespace CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
 
 public sealed record GetAllCarQueryRequest : IRequest<GetAllCarQueryResponse>
 {

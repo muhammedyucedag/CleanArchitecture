@@ -1,5 +1,5 @@
+using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Application.Behaviors;
-using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Repository;
 using CleanArchitecture.Persistance.Context;
@@ -15,9 +15,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
 builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
+
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

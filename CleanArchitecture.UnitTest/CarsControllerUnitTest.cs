@@ -1,4 +1,4 @@
-using CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
+using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 using CleanArchitecture.Presentation.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

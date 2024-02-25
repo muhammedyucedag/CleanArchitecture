@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Domain.Dtos.Car;
 
-namespace CleanArchitecture.Application.Features.CarFeatures.Queries.GetAllCar;
+namespace CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
 
 public sealed record GetAllCarQueryResponse
 {

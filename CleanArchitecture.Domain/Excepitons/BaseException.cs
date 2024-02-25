@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CleanArchitecture.Application.Exceptions;
+namespace CleanArchitecture.Domain.Exceptions;
 
 public class BaseException : Exception
 {

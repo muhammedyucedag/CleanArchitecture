@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Features.CarFeatures.Commands.CreateCar;
+using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 using CleanArchitecture.Domain.Dtos.Car;
 using CleanArchitecture.Domain.Entites;
 
