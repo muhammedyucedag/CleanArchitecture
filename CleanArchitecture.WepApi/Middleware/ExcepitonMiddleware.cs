@@ -1,17 +1,27 @@
-﻿using FluentValidation;
+﻿using CleanArchitecture.Domain.Entites.ErrorLog;
+using CleanArchitecture.Persistance.Context;
+using FluentValidation;
 
 namespace CleanArchitecture.WepApi.Middleware;
 
 public sealed class ExcepitonMiddleware : IMiddleware
 {
+    private readonly AppDbContext _context;
+
+    public ExcepitonMiddleware(AppDbContext context)
+    {
+        _context = context;
+    }
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-			try
-			{
-				await next(context);
-			}
-			catch (Exception ex)
+        try
         {
+            await next(context);
+        }
+        catch (Exception ex)
+        {
+            await LogExcepitonToDatabaseAsync(ex, context.Request);
             await HandleExceptionAsync(context, ex);
         }
     }
@@ -40,5 +50,20 @@ public sealed class ExcepitonMiddleware : IMiddleware
             StatusCode = context.Response.StatusCode
         }.ToString());
 
+    }
+
+    private async Task LogExcepitonToDatabaseAsync(Exception ex, HttpRequest request)
+    {
+        ErrorLog errorLog = new()
+        {
+            ErrorMessage = ex.Message,
+            StackTrace = ex.StackTrace,
+            RequestPath = request.Path,
+            RequestMethod = request.Method,
+            TimeStamp = DateTime.Now,
+        };
+
+        await _context.Set<ErrorLog>().AddAsync(errorLog, default);
+        await _context.SaveChangesAsync();
     }
 }
