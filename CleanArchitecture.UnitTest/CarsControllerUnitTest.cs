@@ -26,7 +26,7 @@ public class CarsControllerUnitTest
 
         // Act (Eylem)
         // Gerçek test eylemi burada gerçekleþtirilir.
-        var result = await carsController.Create(createCarCommandRequest, cancellationToken);
+        var result = await carsController.CreateAsync(createCarCommandRequest);
 
         // Assert (Doðrulama)
         // Test sonucunun beklenen sonuçlarla uyumlu olup olmadýðý burada kontrol edilir.

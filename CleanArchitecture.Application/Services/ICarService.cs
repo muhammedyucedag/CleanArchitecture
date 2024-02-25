@@ -7,5 +7,4 @@ public interface ICarService
 {
     Task CreateAsync(CreateCarCommandRequest request, CancellationToken cancellationToken);
     Task<IEnumerable<Car>> GetAllAsync();
-
 }
