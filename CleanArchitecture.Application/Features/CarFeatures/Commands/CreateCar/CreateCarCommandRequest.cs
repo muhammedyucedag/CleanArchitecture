@@ -7,3 +7,4 @@ public sealed record CreateCarCommandRequest(
     string Model,
     int EnginePower): IRequest<CreateCarCommandResponse>;
 
+

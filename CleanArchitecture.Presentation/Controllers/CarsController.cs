@@ -16,13 +16,4 @@ public sealed class CarsController : ApiController
         CreateCarCommandResponse response = await _mediator.Send(request, cancellationToken);
         return Ok(response);
     }
-
-    [HttpGet]
-    public IActionResult Calculate()
-    {
-        int x = 0;
-        int y = 0;
-        int result = x / y;
-        return Ok(result);
-    }
 }
