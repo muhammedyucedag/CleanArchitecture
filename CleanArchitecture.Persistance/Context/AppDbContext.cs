@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Domain.Abstractions;
+﻿using CleanArchitecture.Domain.Entites.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Persistance.Context;

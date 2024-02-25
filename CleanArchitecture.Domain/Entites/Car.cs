@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Domain.Abstractions;
+﻿using CleanArchitecture.Domain.Entites.Common;
 
 namespace CleanArchitecture.Domain.Entites;
 

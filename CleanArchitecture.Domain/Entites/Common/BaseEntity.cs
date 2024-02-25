@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Abstractions;
+﻿namespace CleanArchitecture.Domain.Entites.Common;
 
 //abstract yaparak bir clasa bağımlı kıldık
 public abstract class BaseEntity

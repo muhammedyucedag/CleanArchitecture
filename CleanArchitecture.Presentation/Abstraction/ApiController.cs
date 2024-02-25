@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Presentation.Abstraction;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public abstract class ApiController : ControllerBase
 {
-    public readonly IMediator _mediator;
+    protected readonly IMediator Mediator;
+
     protected ApiController(IMediator mediator)
     {
-        _mediator = mediator;
+        Mediator = mediator;
     }
 }

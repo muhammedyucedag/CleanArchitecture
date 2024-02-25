@@ -1,16 +1,25 @@
 using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Application.Services;
+using CleanArchitecture.Domain.Repository;
 using CleanArchitecture.Persistance.Context;
+using CleanArchitecture.Persistance.Repository;
 using CleanArchitecture.Persistance.Service;
 using CleanArchitecture.WepApi.Middleware;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
+
+builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
+builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 builder.Services.AddTransient<ExcepitonMiddleware>();
 
 
@@ -22,15 +31,16 @@ var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference
 var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;
 var applicationAssembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
 
-var transient = (typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
+
 
 builder.Services.AddAutoMapper(persistanceAssembly);
 
 builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(applicationAssembly));
-
-builder.Services.AddTransient(transient.Item1, transient.Item2);
 
 builder.Services.AddValidatorsFromAssembly(applicationAssembly); 
 
