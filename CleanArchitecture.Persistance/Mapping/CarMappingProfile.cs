@@ -9,7 +9,10 @@ public sealed class CarMappingProfile : Profile
 {
     public CarMappingProfile()
     {
-        CreateMap<CreateCarCommandRequest, Car>().ReverseMap();
+        CreateMap<CreateCarCommand, Car>().ReverseMap();
+
+        CreateMap<Car, CreateCarDto>().ReverseMap();
+        
         CreateMap<Car, CarListDto>();
     }
 }

@@ -1,30 +1,24 @@
-﻿using AutoMapper;
-using CleanArchitecture.Application.Abstractions.Services;
-using CleanArchitecture.Domain.Dtos.Car;
+﻿using CleanArchitecture.Application.Abstractions.Services;
+using CleanArchitecture.Domain.Entites;
+using EntityFrameworkCorePagination.Nuget.Pagination;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
-
-public sealed record GetAllCarQueryHandler : IRequestHandler<GetAllCarQueryRequest, GetAllCarQueryResponse>
+namespace CleanArchitecture.Application.Features.Queries.GetAllCar
 {
-    private readonly ICarService _carService;
-    private readonly IMapper _mapper;
-
-    public GetAllCarQueryHandler(IMapper mapper, ICarService carService)
+    public sealed record GetAllCarQueryHandler : IRequestHandler<GetAllCarQuery, PaginationResult<Car>>
     {
-        _mapper = mapper;
-        _carService = carService;
-    }
+        private readonly ICarService _carService;
 
-    public async Task<GetAllCarQueryResponse> Handle(GetAllCarQueryRequest request, CancellationToken cancellationToken)
-    {
-        var cars = await _carService.GetAllAsync();
-        var carsDtos = _mapper.Map<CarListDto[]>(cars);
-
-        return new GetAllCarQueryResponse(carsDtos)
+        public GetAllCarQueryHandler(ICarService carService)
         {
-            CarLists = carsDtos
-        };
+            _carService = carService;
+        }
 
+        public async Task<PaginationResult<Car>> Handle(GetAllCarQuery request, CancellationToken cancellationToken)
+        {
+            PaginationResult<Car> cars = await _carService.GetAllAsync(request, cancellationToken);
+            return cars;
+
+        }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Abstractions.Services;
-using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
 using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using CleanArchitecture.Application.Exceptions.Car;
+using EntityFrameworkCorePagination.Nuget.Pagination;
+using CleanArchitecture.Application.Features.Queries.GetAllCar;
 
 namespace CleanArchitecture.Persistance.Service;
 
@@ -21,9 +22,8 @@ public sealed class CarService : ICarService
         _carReadRepository = carReadRepository;
     }
 
-    public async Task CreateAsync(CreateCarCommandRequest request, CancellationToken cancellationToken)
+    public async Task CreateAsync(Car car, CancellationToken cancellationToken)
     {
-        Car car = _mapper.Map<Car>(request);
         await _carWriteRepository.AddAsync(car);
     }
 
@@ -34,6 +34,16 @@ public sealed class CarService : ICarService
         if (cars is null)
             throw new NotFoundCarFailedException();
 
+        return cars;
+    }
+
+    public async Task<PaginationResult<Car>> GetAllAsync(GetAllCarQuery request, CancellationToken cancellationToken)
+    {
+        PaginationResult<Car> cars =
+            await _carReadRepository
+            .GetWhere(p => p.Name.ToLower().Contains(request.Search.ToLower()))
+            .OrderBy(p => p.Name)
+            .ToPagedListAsync(request.PageNumber, request.PageSize, cancellationToken);
         return cars;
     }
 }

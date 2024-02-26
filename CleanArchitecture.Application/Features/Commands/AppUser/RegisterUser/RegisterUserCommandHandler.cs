@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Abstractions.Services;
+﻿    using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Domain.Dtos.User;
 using CleanArchitecture.Domain.ValueObjects;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser
 {
-    public sealed class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommandRequest, RegisterUserCommandResponse>
+    public sealed class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResponse>
     {
         private readonly IUserService _userService;
 
@@ -14,7 +14,7 @@ namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser
             _userService = userService;
         }
 
-        public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var createUserDto = new CreateUserDto
             {

@@ -1,6 +1,8 @@
 ﻿using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
-using CleanArchitecture.Application.Features.Queries.Car.GetAllCar;
+using CleanArchitecture.Application.Features.Queries.GetAllCar;
+using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Presentation.Abstraction;
+using EntityFrameworkCorePagination.Nuget.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +13,16 @@ public sealed class CarsController : ApiController
     public CarsController(IMediator mediator) : base(mediator) { }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> CreateAsync(CreateCarCommandRequest request)
+    public async Task<IActionResult> CreateAsync(CreateCarCommand request)
     {
         var response = await Mediator.Send(request);
         return Ok(response);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllCarsAsync([FromQuery] GetAllCarQueryRequest request)
+    [HttpPost("[action]")]
+    public async Task<IActionResult> GetAllAsync(GetAllCarQuery request, CancellationToken cancellationToken)
     {
-        var response = await Mediator.Send(request);
+        PaginationResult<Car> response = await Mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 }

@@ -2,51 +2,50 @@
 using MediatR;
 using System.Transactions;
 
-namespace CleanArchitecture.Application.Behaviors
+namespace CleanArchitecture.Application.Behaviors;
+
+public sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
-    public sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    private readonly IUnitOfWork _unitOfWork;
+
+    public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
+        _unitOfWork = unitOfWork;
+    }
 
-        public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        if (IsNotCommand())
+            return await next();
+
+        using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+        TResponse response = default;
+        Exception? exception = null;
+        try
         {
-            _unitOfWork = unitOfWork;
+            response = await next();
+        }
+        catch (Exception e)
+        {
+            exception = e;
+            if (!_unitOfWork.IsForce)
+                await _unitOfWork.RollbackAsync(cancellationToken);
         }
 
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-        {
-            if (IsNotCommand())
-                return await next();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        if (_unitOfWork.IsCommit)
+            transactionScope.Complete();
+        else
+            transactionScope.Dispose();
+        if (exception is not null)
+            throw exception;
 
-            using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        return response;
+    }
 
-            TResponse response = default;
-            Exception? exception = null;
-            try
-            {
-                response = await next();
-            }
-            catch (Exception e)
-            {
-                exception = e;
-                if (!_unitOfWork.IsForce)
-                    await _unitOfWork.RollbackAsync(cancellationToken);
-            }
-
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            if (_unitOfWork.IsCommit)
-                transactionScope.Complete();
-            else
-                transactionScope.Dispose();
-            if (exception is not null)
-                throw exception;
-
-            return response;
-        }
-
-        private static bool IsNotCommand()
-        {
-            return !typeof(TRequest).Name.Contains("Command");
-        }
+    private static bool IsNotCommand()
+    {
+        return !typeof(TRequest).Name.Contains("Command");
     }
 }

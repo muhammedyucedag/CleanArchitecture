@@ -20,12 +20,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
 builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
 
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
 builder.Services.AddTransient<ExcepitonMiddleware>();
-
 
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 

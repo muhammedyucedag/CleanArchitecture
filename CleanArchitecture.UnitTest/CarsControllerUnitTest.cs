@@ -14,7 +14,7 @@ public class CarsControllerUnitTest
         // Arrange (Hazýrlýk)
         // Test senaryosu için gerekli tüm hazýrlýklar burada yapýlýr.
         var mediatorMock = new Mock<IMediator>();
-        CreateCarCommandRequest createCarCommandRequest = new("Toyota", "Corolla", 5000);
+        CreateCarCommand createCarCommandRequest = new("Toyota", "Corolla", 5000);
         CreateCarCommandResponse response = new();
         CancellationToken cancellationToken = new();
 

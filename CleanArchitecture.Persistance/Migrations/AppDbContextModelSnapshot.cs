@@ -78,7 +78,7 @@ namespace CleanArchitecture.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entites.Car", b =>
