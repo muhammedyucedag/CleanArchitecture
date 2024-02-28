@@ -8,6 +8,7 @@ using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repository;
 using CleanArchitecture.Persistance.Service;
 using CleanArchitecture.WepApi.Middleware;
+using CleanArchitecture.WepApi.OptionsSetup;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -27,6 +28,11 @@ builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient<ExcepitonMiddleware>();
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+builder.Services.AddAuthentication().AddJwtBearer();
 
 EmailConfigurations configurations = new(
                                        Stmp: "smtp.example.com",
