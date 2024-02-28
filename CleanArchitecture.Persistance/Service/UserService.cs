@@ -3,7 +3,10 @@ using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Application.Exceptions.User;
 using CleanArchitecture.Domain.Dtos.User;
 using CleanArchitecture.Domain.Entites;
+using CleanArchitecture.Domain.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
 
 namespace CleanArchitecture.Persistance.Service
 {
@@ -11,11 +14,13 @@ namespace CleanArchitecture.Persistance.Service
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IEmailSendingService _emailSendingService;
 
-        public UserService(UserManager<AppUser> userManager, IMapper mapper)
+        public UserService(UserManager<AppUser> userManager, IMapper mapper, IEmailSendingService emailSendingService)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _emailSendingService = emailSendingService;
         }
 
         public async Task<AppUser?> GetByUsernameAsync(string username)
@@ -48,6 +53,8 @@ namespace CleanArchitecture.Persistance.Service
                     createUserResult.Errors.Select(error => $"{error.Code} : {error.Description}"));
                 throw new CreateUserFailedException(errorMessage);
             }
+
+            //await _emailSendingService.SendEmailAsync();
 
             return user;
         }

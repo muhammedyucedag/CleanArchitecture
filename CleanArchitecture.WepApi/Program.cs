@@ -2,6 +2,8 @@ using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Repository;
+using CleanArchitecture.Infrastructure.Abstractions.Service;
+using CleanArchitecture.Infrastructure.Configurations;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repository;
 using CleanArchitecture.Persistance.Service;
@@ -15,6 +17,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
@@ -23,6 +27,16 @@ builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient<ExcepitonMiddleware>();
+
+EmailConfigurations configurations = new(
+                                       Stmp: "smtp.example.com",
+                                       Password: "password",
+                                       Port: 587,
+                                       SSL: true,
+                                       Html: true);
+
+builder.Services.AddSingleton(configurations);
+
 
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 
