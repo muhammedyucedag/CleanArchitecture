@@ -54,7 +54,7 @@ namespace CleanArchitecture.Persistance.Service
                 throw new CreateUserFailedException(errorMessage);
             }
 
-            //await _emailSendingService.SendEmailAsync();
+            await _emailSendingService.SendEmailAsync();
 
             return user;
         }

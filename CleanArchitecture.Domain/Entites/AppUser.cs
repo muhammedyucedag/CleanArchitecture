@@ -11,5 +11,7 @@ public sealed class AppUser : IdentityUser<Guid>
 
     public string FullName { get; set; }
     public string Language { get; set; }
+    public string RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpires { get; set; }
 
 }

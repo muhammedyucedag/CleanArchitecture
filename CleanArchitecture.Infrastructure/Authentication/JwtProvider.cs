@@ -1,9 +1,12 @@
 ﻿using CleanArchitecture.Application.Abstractions;
+using CleanArchitecture.Application.Features.Commands.AppUser.Login;
 using CleanArchitecture.Domain.Entites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CleanArchitecture.Infrastructure.Authentication;
@@ -11,13 +14,14 @@ namespace CleanArchitecture.Infrastructure.Authentication;
 public sealed class JwtProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
+    private readonly UserManager<AppUser> _userManager;
 
     public JwtProvider(IOptions<JwtOptions> options)
     {
         _options = options.Value;
     }
 
-    public string CreateToken(AppUser user)
+    public async Task<LoginCommandResponse> CreateTokenAsync(AppUser user)
     {
         var claims = new Claim[]
         {
@@ -26,12 +30,14 @@ public sealed class JwtProvider : IJwtProvider
             new Claim("FullName", user.FullName),
         };
 
+        DateTime expires = DateTime.Now.AddHours(1);
+
         JwtSecurityToken jwtSecurityToken = new(
             issuer: _options.Issuer,
             audience: _options.Audience,
             claims: claims,
             notBefore: DateTime.Now,
-            expires: DateTime.Now.AddHours(1),
+            expires: expires,
             signingCredentials: 
             new SigningCredentials
             (new SymmetricSecurityKey
@@ -40,6 +46,22 @@ public sealed class JwtProvider : IJwtProvider
 
         string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-        return token;
+        string refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpires = expires.AddMinutes(15);
+
+        await _userManager.UpdateAsync(user);
+
+        LoginCommandResponse response = new(
+            token,
+            refreshToken,
+            user.RefreshTokenExpires,
+            user.Id,
+            user.UserName,
+            user.FullName,
+            user.Email);
+
+        return response;
     }
 }
