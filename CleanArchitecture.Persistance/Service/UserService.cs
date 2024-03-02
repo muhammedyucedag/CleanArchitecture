@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Abstractions;
 using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Application.Exceptions.User;
+using CleanArchitecture.Application.Features.Commands.AppUser.Login;
 using CleanArchitecture.Domain.Dtos.User;
 using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 
@@ -14,13 +17,14 @@ namespace CleanArchitecture.Persistance.Service
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly IEmailSendingService _emailSendingService;
+        //private readonly IEmailSendingService _emailSendingService;
+        private readonly IJwtProvider _jwtProvider;
 
-        public UserService(UserManager<AppUser> userManager, IMapper mapper, IEmailSendingService emailSendingService)
+        public UserService(UserManager<AppUser> userManager, IMapper mapper, IJwtProvider jwtProvider)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _emailSendingService = emailSendingService;
+            _jwtProvider = jwtProvider;
         }
 
         public async Task<AppUser?> GetByUsernameAsync(string username)
@@ -54,9 +58,28 @@ namespace CleanArchitecture.Persistance.Service
                 throw new CreateUserFailedException(errorMessage);
             }
 
-            await _emailSendingService.SendEmailAsync();
+            //await _emailSendingService.SendEmailAsync();
 
             return user;
+        }
+
+        public async Task<LoginCommandResponse> LoginAsync(LoginCommand request, CancellationToken cancellation)
+        {
+            AppUser? user = await _userManager.Users.Where
+                (u => u.UserName == request.userNameOrEmail || u.Email == request.userNameOrEmail).FirstOrDefaultAsync(cancellation);
+
+            if (user is null) throw new UserNotFoundExcepiton();
+
+             var result = await _userManager.CheckPasswordAsync(user, request.Password);
+
+            if (result)
+            {
+                LoginCommandResponse response = await _jwtProvider.CreateTokenAsync(user);
+                return response;
+            }
+
+            throw new WrongCurrentPasswordException();
+            
         }
     }
 }

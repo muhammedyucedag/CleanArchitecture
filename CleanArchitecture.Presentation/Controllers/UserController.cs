@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
+﻿using CleanArchitecture.Application.Features.Commands.AppUser.Login;
+using CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
 using CleanArchitecture.Presentation.Abstraction;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,16 @@ namespace CleanArchitecture.Presentation.Controllers
         {}
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register(RegisterUserCommand registerUserCommandRequest)
+        public async Task<IActionResult> RegisterAsync(RegisterCommand request)
         {
-            RegisterUserCommandResponse response = await Mediator.Send(registerUserCommandRequest);
+            RegisterCommandResponse response = await Mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LoginAsync(LoginCommand request, CancellationToken cancellationToken)
+        {
+            LoginCommandResponse response = await Mediator.Send(request, cancellationToken);
             return Ok(response);
         }
     }

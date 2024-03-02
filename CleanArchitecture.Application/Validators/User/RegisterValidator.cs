@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace CleanArchitecture.Application.Validators.User;
 
-public sealed class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
+public sealed class RegisterValidator : AbstractValidator<RegisterCommand>
 {
-    public RegisterUserValidator()
+    public RegisterValidator()
     {
         RuleFor(validate => validate.FullName)
             .NotNull()

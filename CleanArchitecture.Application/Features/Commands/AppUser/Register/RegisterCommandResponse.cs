@@ -1,4 +1,4 @@
 ﻿namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
 
-public sealed record RegisterUserCommandResponse(
+public sealed record RegisterCommandResponse(
    string Message = "Record created successfully");

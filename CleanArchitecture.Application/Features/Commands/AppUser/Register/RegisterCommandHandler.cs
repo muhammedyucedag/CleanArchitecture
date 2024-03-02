@@ -5,16 +5,16 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser
 {
-    public sealed class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResponse>
+    public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResponse>
     {
         private readonly IUserService _userService;
 
-        public RegisterUserCommandHandler(IUserService userService)
+        public RegisterCommandHandler(IUserService userService)
         {
             _userService = userService;
         }
 
-        public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var createUserDto = new CreateUserDto
             {
@@ -28,7 +28,7 @@ namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser
 
             await _userService.RegisterAsync(createUserDto);
 
-            return new RegisterUserCommandResponse();
+            return new RegisterCommandResponse();
         }
     }
 }

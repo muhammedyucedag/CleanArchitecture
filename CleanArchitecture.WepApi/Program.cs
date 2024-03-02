@@ -1,8 +1,10 @@
+using CleanArchitecture.Application.Abstractions;
 using CleanArchitecture.Application.Abstractions.Services;
 using CleanArchitecture.Application.Behaviors;
 using CleanArchitecture.Domain.Entites;
 using CleanArchitecture.Domain.Repository;
 using CleanArchitecture.Infrastructure.Abstractions.Service;
+using CleanArchitecture.Infrastructure.Authentication;
 using CleanArchitecture.Infrastructure.Configurations;
 using CleanArchitecture.Persistance.Context;
 using CleanArchitecture.Persistance.Repository;
@@ -19,8 +21,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IMailService, MailService>();
-builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
+//builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
 builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();

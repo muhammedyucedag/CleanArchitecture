@@ -1,4 +1,5 @@
 using CleanArchitecture.Application.Features.Commands.Car.CreateCar;
+using CleanArchitecture.Domain.Dtos.Car;
 using CleanArchitecture.Presentation.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ public class CarsControllerUnitTest
         // Test senaryosu için gerekli tüm hazýrlýklar burada yapýlýr.
         var mediatorMock = new Mock<IMediator>();
         CreateCarCommand createCarCommandRequest = new("Toyota", "Corolla", 5000);
-        CreateCarCommandResponse response = new();
+        CreateCarDto response = new();
         CancellationToken cancellationToken = new();
 
         // Mediator mock'u üzerinde gerekli ayarlamalar yapýlýr.
@@ -31,7 +32,7 @@ public class CarsControllerUnitTest
         // Assert (Doðrulama)
         // Test sonucunun beklenen sonuçlarla uyumlu olup olmadýðý burada kontrol edilir.
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<CreateCarCommandResponse>(okResult.Value);
+        var returnValue = Assert.IsType<CreateCarDto>(okResult.Value);
 
         // Response deðerinin doðru dönüp dönmediði ve Mediator'un çaðrýldýðý doðrulanýr.
         Assert.Equal(response, returnValue);
