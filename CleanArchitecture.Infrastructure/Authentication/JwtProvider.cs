@@ -16,9 +16,10 @@ public sealed class JwtProvider : IJwtProvider
     private readonly JwtOptions _options;
     private readonly UserManager<AppUser> _userManager;
 
-    public JwtProvider(IOptions<JwtOptions> options)
+    public JwtProvider(IOptions<JwtOptions> options, UserManager<AppUser> userManager)
     {
         _options = options.Value;
+        _userManager = userManager;
     }
 
     public async Task<LoginCommandResponse> CreateTokenAsync(AppUser user)
@@ -29,6 +30,8 @@ public sealed class JwtProvider : IJwtProvider
             new Claim(JwtRegisteredClaimNames.Name, user.UserName),
             new Claim("FullName", user.FullName),
         };
+
+        var secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
         DateTime expires = DateTime.Now.AddHours(1);
 
@@ -41,7 +44,7 @@ public sealed class JwtProvider : IJwtProvider
             signingCredentials: 
             new SigningCredentials
             (new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(_options.SecretKey)),
+            (Encoding.UTF8.GetBytes(secretKey)),
             SecurityAlgorithms.HmacSha256));
 
         string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
