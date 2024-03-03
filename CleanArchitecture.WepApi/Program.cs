@@ -36,6 +36,7 @@ builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization();
 
 EmailConfigurations configurations = new(
                                        Stmp: "smtp.example.com",
@@ -83,8 +84,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddlewareExtensions();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
