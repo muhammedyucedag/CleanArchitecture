@@ -31,8 +31,6 @@ public sealed class JwtProvider : IJwtProvider
             new Claim("FullName", user.FullName),
         };
 
-        var secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
-
         DateTime expires = DateTime.Now.AddHours(1);
 
         JwtSecurityToken jwtSecurityToken = new(
@@ -44,7 +42,7 @@ public sealed class JwtProvider : IJwtProvider
             signingCredentials: 
             new SigningCredentials
             (new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(secretKey)),
+            (Encoding.UTF8.GetBytes(_options.SecretKey)),
             SecurityAlgorithms.HmacSha256));
 
         string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

@@ -13,8 +13,11 @@ using CleanArchitecture.WepApi.Middleware;
 using CleanArchitecture.WepApi.OptionsSetup;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,7 +60,6 @@ var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference
 var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;
 var applicationAssembly = typeof(CleanArchitecture.Application.AssemblyReference).Assembly;
 
-
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
 
@@ -68,10 +70,37 @@ builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(applicationAssembly));
 
-builder.Services.AddValidatorsFromAssembly(applicationAssembly); 
+builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Please insert your JWT Token into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Header,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 
 var app = builder.Build();
 
