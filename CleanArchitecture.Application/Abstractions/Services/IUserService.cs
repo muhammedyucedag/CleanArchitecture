@@ -1,4 +1,5 @@
 ﻿
+using CleanArchitecture.Application.Features.Commands.AppUser.CreateNewTokenByRefreshToken;
 using CleanArchitecture.Application.Features.Commands.AppUser.Login;
 using CleanArchitecture.Domain.Dtos.User;
 using CleanArchitecture.Domain.Entites;
@@ -9,5 +10,6 @@ public interface IUserService
 {
     Task<AppUser> RegisterAsync(CreateUserDto createUserDto);
     Task<LoginCommandResponse> LoginAsync(LoginCommand request, CancellationToken cancellationToken);
+    Task<LoginCommandResponse> CreateTokenByRefreshTokenAsync(CreateNewTokenByRefreshTokenCommand request, CancellationToken cancellationToken);
 
 }

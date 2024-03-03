@@ -42,7 +42,6 @@ public sealed class RegisterValidator : AbstractValidator<RegisterCommand>
             .WithMessage("User name can only contain letters, numbers, and spaces.")
             .WithErrorCode(ValidatorErrorCodes.ERR_INVALID_NAME_FORMAT.ToDescriptionString());
 
-
         RuleFor(validate => validate.Password)
             .MinimumLength(8)
             .WithMessage("The minimum length for a password is 8 characters.")
@@ -85,7 +84,6 @@ public sealed class RegisterValidator : AbstractValidator<RegisterCommand>
             .EmailAddress()
             .WithMessage("Invalid email format.")
             .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_INVALID_FORMAT.ToDescriptionString());
-
 
     }
 
