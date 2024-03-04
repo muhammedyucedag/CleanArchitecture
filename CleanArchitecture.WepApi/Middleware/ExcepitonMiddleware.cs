@@ -5,7 +5,7 @@ using FluentValidation;
 namespace CleanArchitecture.WepApi.Middleware;
 
 public sealed class ExcepitonMiddleware : IMiddleware
-{
+{   
     private readonly AppDbContext _context;
 
     public ExcepitonMiddleware(AppDbContext context)

@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace CleanArchitecture.Presentation.Controllers;
 
 public sealed class UserController : ApiController
