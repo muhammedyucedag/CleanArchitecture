@@ -22,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 //builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
@@ -52,7 +53,7 @@ builder.Services.AddSingleton(configurations);
 string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<AppUser, Role>().AddEntityFrameworkStores<AppDbContext>();
 
 var persistanceAssembly = typeof(CleanArchitecture.Persistance.AssemblyReference).Assembly;
 var presentationAssembly = typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly;

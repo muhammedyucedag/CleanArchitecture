@@ -1,0 +1,20 @@
+﻿using CleanArchitecture.Application.Features.Commands.Role.CreateRole;
+using CleanArchitecture.Presentation.Abstraction;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CleanArchitecture.Presentation.Controllers;
+
+public class RoleController : ApiController
+{
+    public RoleController(IMediator mediator) : base(mediator)
+    {
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand request)
+    {
+        var response = await Mediator.Send(request);
+        return Ok(response);
+    }
+}
