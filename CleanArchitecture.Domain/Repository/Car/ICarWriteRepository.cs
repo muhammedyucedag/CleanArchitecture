@@ -3,5 +3,6 @@
 namespace CleanArchitecture.Domain.Repository
 {
     public interface ICarWriteRepository : IWriteRepository<Car>
-    {}
+    {
+    }
 }

@@ -14,10 +14,7 @@ public sealed class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand
 
     public async Task<CreateRoleCommandResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
-        var result = await _roleService.CreateAsync(request.Name);
-        return new(request.Name)
-        {
-            Succeeded = result,
-        };
+        await _roleService.CreateAsync(request.Name);
+        return new(request.Name);
     }
 }

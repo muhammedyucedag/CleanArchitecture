@@ -30,6 +30,9 @@ builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<ICarReadRepository, CarReadRepository>();
 builder.Services.AddScoped<ICarWriteRepository, CarWriteRepository>();
 
+builder.Services.AddScoped<IUserRoleWriteRepository, UserRoleWriteRepository>();
+builder.Services.AddScoped<IUserRoleReadRepository, UserRoleReadRepository>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient<ExcepitonMiddleware>();

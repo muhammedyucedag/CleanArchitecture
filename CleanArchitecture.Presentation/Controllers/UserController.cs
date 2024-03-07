@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Features.Commands.AppUser.CreateNewTokenByRefreshToken;
 using CleanArchitecture.Application.Features.Commands.AppUser.Login;
 using CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
+using CleanArchitecture.Application.Features.Commands.UserRole.CreateUserRole;
 using CleanArchitecture.Presentation.Abstraction;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,13 @@ public sealed class UserController : ApiController
     public async Task<IActionResult> CreateTokenByRefreshTokenAsync(CreateNewTokenByRefreshTokenCommand request, CancellationToken cancellationToken)
     {
         LoginCommandResponse response = await Mediator.Send(request, cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommand request)
+    {
+        AssignRoleToUserCommandResponse response = await Mediator.Send(request);
         return Ok(response);
     }
 }
