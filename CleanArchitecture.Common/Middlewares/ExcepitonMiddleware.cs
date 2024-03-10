@@ -1,8 +1,9 @@
 ﻿using CleanArchitecture.Domain.Entites.ErrorLog;
 using CleanArchitecture.Persistance.Context;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
-namespace CleanArchitecture.WepApi.Middleware;
+namespace CleanArchitecture.Common.Middleware;
 
 public sealed class ExcepitonMiddleware : IMiddleware
 {   

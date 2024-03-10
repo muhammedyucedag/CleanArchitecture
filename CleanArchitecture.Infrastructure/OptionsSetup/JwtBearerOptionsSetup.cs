@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace CleanArchitecture.WepApi.OptionsSetup;
+namespace CleanArchitecture.Infrastructure.OptionsSetup;
 
 public sealed class JwtBearerOptionsSetup : IPostConfigureOptions<JwtBearerOptions>
 {

@@ -1,7 +1,8 @@
 ﻿using CleanArchitecture.Infrastructure.Authentication;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace CleanArchitecture.WepApi.OptionsSetup;
+namespace CleanArchitecture.Infrastructure.OptionsSetup;
 
 public sealed class JwtOptionsSetup : IConfigureOptions<JwtOptions>
 {
