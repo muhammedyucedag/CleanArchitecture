@@ -17,7 +17,7 @@ public sealed class CarsController : ApiController
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateAsync(CreateCarCommand request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
         return Ok(response);
     }
 
@@ -25,7 +25,7 @@ public sealed class CarsController : ApiController
     [HttpPost("[action]")]
     public async Task<IActionResult> GetAllAsync(GetAllCarQuery request, CancellationToken cancellationToken)
     {
-        PaginationResult<Car> response = await Mediator.Send(request, cancellationToken);
+        PaginationResult<Car> response = await _mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 }

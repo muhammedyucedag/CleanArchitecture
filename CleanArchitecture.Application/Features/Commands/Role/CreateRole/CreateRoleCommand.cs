@@ -6,5 +6,3 @@ namespace CleanArchitecture.Application.Features.Commands.Role.CreateRole;
 
 public sealed record CreateRoleCommand(
     string Name) : IRequest<CreateRoleCommandResponse>;
-
-

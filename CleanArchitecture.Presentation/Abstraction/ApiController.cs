@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Presentation.Abstraction;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 [Authorize(AuthenticationSchemes = "Bearer")]
 public abstract class ApiController : ControllerBase
 {
-    protected readonly IMediator Mediator;
+    public readonly IMediator _mediator;
 
     protected ApiController(IMediator mediator)
     {
-        Mediator = mediator;
+        _mediator = mediator;
     }
 }

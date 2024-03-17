@@ -18,7 +18,7 @@ public sealed class UserController : ApiController
     [AllowAnonymous]
     public async Task<IActionResult> RegisterAsync(RegisterCommand request)
     {
-        RegisterCommandResponse response = await Mediator.Send(request);
+        RegisterCommandResponse response = await _mediator.Send(request);
         return Ok(response);
     }
 
@@ -26,21 +26,21 @@ public sealed class UserController : ApiController
     [AllowAnonymous]
     public async Task<IActionResult> LoginAsync(LoginCommand request, CancellationToken cancellationToken)
     {
-        LoginCommandResponse response = await Mediator.Send(request, cancellationToken);
+        LoginCommandResponse response = await _mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateTokenByRefreshTokenAsync(CreateNewTokenByRefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        LoginCommandResponse response = await Mediator.Send(request, cancellationToken);
+        LoginCommandResponse response = await _mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 
     [HttpPost("[action]")]
     public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommand request)
     {
-        AssignRoleToUserCommandResponse response = await Mediator.Send(request);
+        AssignRoleToUserCommandResponse response = await _mediator.Send(request);
         return Ok(response);
     }
 }

@@ -14,7 +14,7 @@ public class RoleController : ApiController
     [HttpPost]
     public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
         return Ok(response);
     }
 }
