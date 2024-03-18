@@ -4,6 +4,6 @@ namespace CleanArchitecture.Application.Exceptions.User;
 
 public class ExistUsernameException : BaseException
 {
-    public ExistUsernameException() : base("This Username is registered in the system. Please enter another Username.")
+    public ExistUsernameException() : base("Bu Kullanıcı Adı sisteme kayıtlıdır. Lütfen başka bir Kullanıcı Adı girin.")
     { }
 }

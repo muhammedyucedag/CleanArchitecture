@@ -7,11 +7,7 @@ public sealed class AssignRoleToUserCommandValidator : AbstractValidator<AssignR
 {
     public AssignRoleToUserCommandValidator()
     {
-        RuleFor(x => x.RoleId)
-            .NotEmpty()
-            .WithMessage("Rol kimliği boş olmamalıdır.");
-        RuleFor(x => x.UserId)
-            .NotEmpty()
-            .WithMessage("Kullanıcı kimliği boş olmamalıdır.");
+        RuleFor(x => x.RoleId).NotEmpty().WithMessage("Rol kimliği boş olmamalıdır.");
+        RuleFor(x => x.UserId).NotEmpty().WithMessage("Kullanıcı kimliği boş olmamalıdır.");
     }
 }

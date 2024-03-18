@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.WepApi\CleanArchitecture.WepApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

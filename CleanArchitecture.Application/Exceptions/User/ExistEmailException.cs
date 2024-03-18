@@ -4,6 +4,6 @@ namespace CleanArchitecture.Application.Exceptions.User;
 
 public class ExistEmailException : BaseException
 {
-    public ExistEmailException() : base("This Email address is registered in the system. Please enter another Email.")
+    public ExistEmailException() : base("Bu Email adresi sisteme kayıtlıdır. Lütfen başka bir E-posta girin.")
     {}
 }

@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Extensions;
-using CleanArchitecture.Application.Features.Commands.User.RegisterUser;
+﻿using CleanArchitecture.Application.Features.Commands.User.RegisterUser;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Validators.User;
@@ -9,82 +8,35 @@ public sealed class RegisterValidator : AbstractValidator<RegisterCommand>
     public RegisterValidator()
     {
         RuleFor(validate => validate.FullName)
-            .NotNull()
-            .WithMessage("Fullname is required.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_FULLNAME_REQUIRED.ToDescriptionString())
-            .NotEmpty()
-            .WithMessage("Fullname is required.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_FULLNAME_REQUIRED.ToDescriptionString())
-            .MinimumLength(2)
-            .WithMessage("The minimum length for a FullName is 2 characters.")               
-            .WithErrorCode(ValidatorErrorCodes.ERR_FULLNAME_MIN_LENGTH.ToDescriptionString())
-            .MaximumLength(50)
-            .WithMessage("The maximum length for a FullName is 50 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_FULLNAME_MAX_LENGTH.ToDescriptionString())
-            .Matches(@"^[\p{L}0-9\s]+$")
-            .WithMessage("Company name can only contain letters, numbers, and spaces.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_INVALID_NAME_FORMAT.ToDescriptionString());
+            .NotNull().WithMessage("Ad ve soyad alanı zorunludur.")
+            .NotEmpty().WithMessage("Ad ve soyad alanı boş bırakılamaz.")
+            .MinimumLength(2).WithMessage("Ad ve soyad en az 2 karakter uzunluğunda olmalıdır.")
+            .MaximumLength(50).WithMessage("Ad ve soyad en fazla 50 karakter uzunluğunda olmalıdır.")
+            .Matches(@"^[\p{L}0-9\s]+$").WithMessage("Ad ve soyad yalnızca harf, rakam ve boşluk içerebilir.");
 
         RuleFor(validate => validate.Username)
-            .NotNull()
-            .WithMessage("Please do not leave the username field blank.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_USERNAME_REQUIRED.ToDescriptionString())
-            .NotEmpty()
-            .WithMessage("Please do not leave the username field blank.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_USERNAME_REQUIRED.ToDescriptionString())
-            .MinimumLength(6)
-            .WithMessage("The minimum length for a username is 6 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_USERNAME_MIN_LENGTH.ToDescriptionString())
-            .MaximumLength(20)
-            .WithMessage("The maximum length for a username is 20 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_USERNAME_MAX_LENGTH.ToDescriptionString())
-            .Matches(@"^[\p{L}0-9\s]+$")
-            .WithMessage("User name can only contain letters, numbers, and spaces.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_INVALID_NAME_FORMAT.ToDescriptionString());
+            .NotNull().WithMessage("Lütfen kullanıcı adı alanını boş bırakmayın.")
+            .NotEmpty().WithMessage("Lütfen kullanıcı adı alanını boş bırakmayın.")
+            .MinimumLength(6).WithMessage("Kullanıcı adı en az 6 karakter uzunluğunda olmalıdır.")
+            .MaximumLength(20).WithMessage("Kullanıcı adı en fazla 20 karakter uzunluğunda olmalıdır.")
+            .Matches(@"^[\p{L}0-9\s]+$").WithMessage("Kullanıcı adı yalnızca harf, rakam ve boşluk içerebilir.");
 
         RuleFor(validate => validate.Password)
-            .MinimumLength(8)
-            .WithMessage("The minimum length for a password is 8 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_MIN_LENGTH.ToDescriptionString())
-            .MaximumLength(20)
-            .WithMessage("The maximum length for a password is 20 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_MAX_LENGTH.ToDescriptionString())
-            .Matches("[A-Z]")
-            .WithMessage("Password must contain at least one uppercase letter.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_UPPERCASE.ToDescriptionString())
-            .Matches("[a-z]")
-            .WithMessage("Password must contain at least one lowercase letter.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_LOWERCASE.ToDescriptionString())
-            .Matches("[0-9]")
-            .WithMessage("Password must contain at least one digit.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_DIGIT.ToDescriptionString())
-            .Matches("[!@#$%^&*(),.?\":{}|<>]")
-            .WithMessage("The password must contain special characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_SPECIAL_CHARACTERS.ToDescriptionString())
-            .Must(BeDifferentFromFirstAndLastCharacter)
-            .WithMessage("First and last characters must be different.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_FIRST_LAST_DIFFERENT.ToDescriptionString())
-            .WithMessage("Password is too weak.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_PASSWORD_WEAK.ToDescriptionString());
-
+            .MinimumLength(8).WithMessage("Şifre en az 8 karakter uzunluğunda olmalıdır.")
+            .MaximumLength(20).WithMessage("Şifre en fazla 20 karakter uzunluğunda olmalıdır.")
+            .Matches("[A-Z]").WithMessage("Şifre en az bir büyük harf içermelidir.")
+            .Matches("[a-z]").WithMessage("Şifre en az bir küçük harf içermelidir.")
+            .Matches("[0-9]").WithMessage("Şifre en az bir rakam içermelidir.")
+            .Matches("[!@#$%^&*(),.?\":{}|<>]").WithMessage("Şifre özel karakterler içermelidir.")
+            .Must(BeDifferentFromFirstAndLastCharacter).WithMessage("İlk ve son karakterler farklı olmalıdır.")
+            .WithMessage("Şifre zayıf.");
 
         RuleFor(validate => validate.Email)
-            .NotNull()
-            .WithMessage("Please do not leave the Email field blank.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_REQUIRED.ToDescriptionString())
-            .NotEmpty()
-            .WithMessage("Please do not leave the Email field blank.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_REQUIRED.ToDescriptionString())
-            .MinimumLength(6)
-            .WithMessage("The minimum length for a Email is 6 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_MIN_LENGTH.ToDescriptionString())
-            .MaximumLength(50)
-            .WithMessage("The maximum length for a Email is 50 characters.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_MAX_LENGTH.ToDescriptionString())
-            .EmailAddress()
-            .WithMessage("Invalid email format.")
-            .WithErrorCode(ValidatorErrorCodes.ERR_EMAIL_INVALID_FORMAT.ToDescriptionString());
-
+            .NotNull().WithMessage("Lütfen e-posta alanını boş bırakmayın.")
+            .NotEmpty().WithMessage("Lütfen e-posta alanını boş bırakmayın.")
+            .MinimumLength(6).WithMessage("E-posta en az 6 karakter uzunluğunda olmalıdır.")
+            .MaximumLength(50).WithMessage("E-posta en fazla 50 karakter uzunluğunda olmalıdır.")
+            .EmailAddress().WithMessage("Geçersiz e-posta formatı.");
     }
 
     private bool BeDifferentFromFirstAndLastCharacter(string password)

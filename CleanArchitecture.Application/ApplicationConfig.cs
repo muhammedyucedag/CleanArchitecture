@@ -1,19 +1,17 @@
-﻿using CleanArchitecture.Application;
-using CleanArchitecture.Application.Behaviors;
+﻿using CleanArchitecture.Application.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.WepApi.Configurations
+namespace CleanArchitecture.Application;
+
+public static class ConfigureServiceExtension
 {
-    public static class ConfigureServiceExtension
+    public static void ApplicationServiceRegistration(IServiceCollection services, IConfiguration configuration)
     {
-        public static void ApplicationServiceRegistration(IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
-        }
+        services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
     }
 }

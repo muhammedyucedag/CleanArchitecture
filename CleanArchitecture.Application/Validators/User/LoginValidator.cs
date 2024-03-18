@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Extensions;
-using CleanArchitecture.Application.Features.Commands.User.Login;
+﻿using CleanArchitecture.Application.Features.Commands.User.Login;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
@@ -11,36 +10,24 @@ public class LoginValidator : AbstractValidator<LoginCommand>
     {
         RuleFor(validate => validate.userNameOrEmail)
             .Cascade(CascadeMode.Stop)
-            .NotNull()
-            .WithMessage("Lütfen kullanıcı adı veya e-posta alanını boş bırakmayınız.")
-            .NotEmpty()
-            .WithMessage("Lütfen kullanıcı adı veya e-posta alanını boş bırakmayınız.")
-            .MinimumLength(6)
-            .WithMessage("Bir kullanıcı adı veya e-posta için minimum uzunluk 6 karakterdir.")
-            .MaximumLength(50)
-            .WithMessage("Bir kullanıcı adı veya e-posta için maksimum uzunluk 50 karakterdir.")
+            .NotNull().WithMessage("Lütfen kullanıcı adı veya e-posta alanını boş bırakmayınız.")
+            .NotEmpty().WithMessage("Lütfen kullanıcı adı veya e-posta alanını boş bırakmayınız.")
+            .MinimumLength(6).WithMessage("Bir kullanıcı adı veya e-posta için minimum uzunluk 6 karakterdir.")
+            .MaximumLength(50).WithMessage("Bir kullanıcı adı veya e-posta için maksimum uzunluk 50 karakterdir.")
             .Must(input => IsEmail(input) || IsUserName(input))
             .WithMessage("Kullanıcı yanlızca harf, sayı içerebilir. E-posta yalnızca harf, sayı ve geçerli karakterleri içerebilir.");
 
 
         RuleFor(validate => validate.Password)
-            .NotNull()
-            .WithMessage("Lütfen şifre alanını boş bırakmayınız.")
-            .NotEmpty()
-            .WithMessage("Lütfen şifre alanını boş bırakmayınız.")
-            .MinimumLength(8)
-            .WithMessage("Bir şifrenin minimum uzunluğu 8 karakterdir.")
-            .MaximumLength(20)
-            .WithMessage("Bir şifrenin maksimum uzunluğu 20 karakterdir.")
-            .Matches("[A-Z]")
-            .WithMessage("Şifre en az bir büyük harf içermelidir.")
-            .Matches("[a-z]")
-            .Matches("[0-9]")
-            .WithMessage("Şifre en az bir rakam içermelidir.")
-            .Matches(new Regex("[!@#$%^&*(),.?\":{}|<>]"))
-            .WithMessage("Şifre özel karakterler içermelidir.")
-            .Must(BeDifferentFromFirstAndLastCharacter)
-            .WithMessage("İlk ve son karakterler farklı olmalıdır.")
+            .NotNull().WithMessage("Lütfen şifre alanını boş bırakmayınız.")
+            .NotEmpty().WithMessage("Lütfen şifre alanını boş bırakmayınız.")
+            .MinimumLength(8).WithMessage("Bir şifrenin minimum uzunluğu 8 karakterdir.")
+            .MaximumLength(20).WithMessage("Bir şifrenin maksimum uzunluğu 20 karakterdir.")
+            .Matches("[A-Z]").WithMessage("Şifre en az bir büyük harf içermelidir.")
+            .Matches("[a-z]").WithMessage("Şifre en az bir küçük harf içermelidir.")
+            .Matches("[0-9]").WithMessage("Şifre en az bir rakam içermelidir.")
+            .Matches(new Regex("[!@#$%^&*(),.?\":{}|<>]")).WithMessage("Şifre özel karakterler içermelidir.")
+            .Must(BeDifferentFromFirstAndLastCharacter).WithMessage("İlk ve son karakterler farklı olmalıdır.")
             .WithMessage("Şifre çok zayıf.");
 
     }
