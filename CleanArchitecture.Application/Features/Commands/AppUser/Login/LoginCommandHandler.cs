@@ -1,20 +1,20 @@
 ﻿using CleanArchitecture.Application.Abstractions.Services;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Commands.AppUser.Login;
+namespace CleanArchitecture.Application.Features.Commands.User.Login;
 
 public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandResponse>
 {
-    private readonly IUserService _userService;
+    private readonly IAuthService _authService;
 
-    public LoginCommandHandler(IUserService userService)
+    public LoginCommandHandler(IAuthService authService)
     {
-        _userService = userService;
+        _authService = authService;
     }
 
     public async Task<LoginCommandResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        LoginCommandResponse response = await _userService.LoginAsync(request, cancellationToken);
+        LoginCommandResponse response = await _authService.LoginAsync(request, cancellationToken);
         return response;
     }
 }

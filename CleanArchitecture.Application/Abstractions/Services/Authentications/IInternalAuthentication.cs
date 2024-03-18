@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Domain.Entites;
+﻿using CleanArchitecture.Application.Features.Commands.User.Login;
 
 namespace CleanArchitecture.Application.Abstractions.Services.Authentications;
 
 public interface IInternalAuthentication
 {
-    Task<AppUser> LoginAsync(string usernameOrEmail, string password);
+    Task<LoginCommandResponse> LoginAsync(LoginCommand request, CancellationToken cancellationToken);
 }

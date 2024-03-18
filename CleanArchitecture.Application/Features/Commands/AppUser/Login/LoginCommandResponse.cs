@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Application.Features.Commands.AppUser.Login;
+﻿namespace CleanArchitecture.Application.Features.Commands.User.Login;
 
 public sealed record LoginCommandResponse(
     string Token,

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
+namespace CleanArchitecture.Application.Features.Commands.User.RegisterUser;
 
 public sealed record RegisterCommand(
      string FullName,

@@ -1,4 +1,6 @@
-﻿namespace CleanArchitecture.WepApi.Middleware
+﻿using Microsoft.AspNetCore.Builder;
+
+namespace CleanArchitecture.Persistance.Middleware
 {
     public static class MiddlewareExtension
     {

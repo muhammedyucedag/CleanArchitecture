@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Features.Commands.AppUser.Login;
+﻿using CleanArchitecture.Application.Features.Commands.User.Login;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Commands.AppUser.CreateNewTokenByRefreshToken;
+namespace CleanArchitecture.Application.Features.Commands.User.CreateNewTokenByRefreshToken;
 
 public sealed record CreateNewTokenByRefreshTokenCommand(
     string UserId,

@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Application.Features.Commands.AppUser.Login;
+﻿using CleanArchitecture.Application.Features.Commands.User.Login;
 using CleanArchitecture.Domain.Entites;
 
 namespace CleanArchitecture.Application.Abstractions;
 
 public interface IJwtProvider
 {
-    Task<LoginCommandResponse> CreateTokenAsync(AppUser user);
+    Task<LoginCommandResponse> CreateTokenAsync(User user);
 }

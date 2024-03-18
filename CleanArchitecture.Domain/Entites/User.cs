@@ -2,9 +2,9 @@
 
 namespace CleanArchitecture.Domain.Entites;
 
-public sealed class AppUser : IdentityUser<Guid>
+public sealed class User : IdentityUser<Guid>
 {
-    public AppUser()
+    public User()
     {
         Id = Guid.NewGuid();
     }

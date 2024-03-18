@@ -7,5 +7,4 @@ public interface IRoleService
 {
     Task<bool> CreateAsync(string name);
     Task AssignRoleToUserAsync(AssignRoleToUserCommand request);
-
 }

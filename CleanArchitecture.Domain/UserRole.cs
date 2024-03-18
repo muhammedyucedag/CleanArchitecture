@@ -8,7 +8,7 @@ public sealed class UserRole : BaseEntity
 {
     [ForeignKey("User")]
     public Guid UserId { get; set; }
-    public AppUser User { get; set; }
+    public User User { get; set; }
 
     [ForeignKey("Role")]
     public Guid RoleId { get; set; }

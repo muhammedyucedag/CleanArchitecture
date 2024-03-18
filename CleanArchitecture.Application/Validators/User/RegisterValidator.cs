@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.Extensions;
-using CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser;
+using CleanArchitecture.Application.Features.Commands.User.RegisterUser;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Validators.User;

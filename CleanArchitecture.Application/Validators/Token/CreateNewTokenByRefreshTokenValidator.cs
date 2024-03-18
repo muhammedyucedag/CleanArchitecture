@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Features.Commands.AppUser.CreateNewTokenByRefreshToken;
+﻿using CleanArchitecture.Application.Features.Commands.User.CreateNewTokenByRefreshToken;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Validators.Token;

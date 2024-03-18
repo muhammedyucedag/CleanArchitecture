@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.Abstractions;
-using CleanArchitecture.Application.Features.Commands.AppUser.Login;
+using CleanArchitecture.Application.Features.Commands.User.Login;
 using CleanArchitecture.Domain.Entites;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -14,15 +14,15 @@ namespace CleanArchitecture.Infrastructure.Authentication;
 public sealed class JwtProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
-    private readonly UserManager<AppUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public JwtProvider(IOptions<JwtOptions> options, UserManager<AppUser> userManager)
+    public JwtProvider(IOptions<JwtOptions> options, UserManager<User> userManager)
     {
         _options = options.Value;
         _userManager = userManager;
     }
 
-    public async Task<LoginCommandResponse> CreateTokenAsync(AppUser user)
+    public async Task<LoginCommandResponse> CreateTokenAsync(User user)
     {
         var claims = new Claim[]
         {

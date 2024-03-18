@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CleanArchitecture.WepApi.Middleware;
+namespace CleanArchitecture.Persistance.Middleware;
 
 public sealed class ErrorResult : ErrorStatusCode
 {

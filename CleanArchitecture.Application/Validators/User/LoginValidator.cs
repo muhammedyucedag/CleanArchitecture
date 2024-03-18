@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.Extensions;
-using CleanArchitecture.Application.Features.Commands.AppUser.Login;
+using CleanArchitecture.Application.Features.Commands.User.Login;
 using FluentValidation;
 using System.Text.RegularExpressions;
 

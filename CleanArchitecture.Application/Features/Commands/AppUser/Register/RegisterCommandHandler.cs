@@ -3,7 +3,7 @@ using CleanArchitecture.Domain.Dtos.User;
 using CleanArchitecture.Domain.ValueObjects;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Commands.AppUser.RegisterUser
+namespace CleanArchitecture.Application.Features.Commands.User.RegisterUser
 {
     public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResponse>
     {
